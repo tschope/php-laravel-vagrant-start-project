@@ -19,6 +19,10 @@ vagrant_congig.yml
 
 Most configs is there, changed and enjoy the project
 
+# ATTENTION
+
+This project use Ubuntu and I created a few roles for Ansiable and this roles only works with Ubuntu. You can use Trusty, Xenial or Zesty version.
+
 # PHP Laravel Test
 
 Project develop for PHP with REST API.
