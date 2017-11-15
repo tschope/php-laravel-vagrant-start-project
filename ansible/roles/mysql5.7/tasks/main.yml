@@ -1,0 +1,85 @@
+---
+# Retrieve the current hostname, because {{ ansible_hostname }} still contains the old name
+- shell: hostname
+  register: current_hostname
+
+- name: MySQL 5.7 Key
+  apt_key:
+    keyserver: pgp.mit.edu
+    id: 5072E1F5
+
+- name: Install Repo MySQL 5.7 mysql-apt-config
+  apt_repository:
+    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-apt-config
+    state: present
+
+- name: Install Repo MySQL 5.7
+  apt_repository:
+    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
+    state: present
+
+- name: Install Repo MySQL 5.7 mysql-tools
+  apt_repository:
+    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools
+    state: present
+
+- name: Install Repo MySQL 5.7 deb-src
+  apt_repository:
+    repo: deb-src http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
+    state: present
+
+- name: Update apt
+  become: yes
+  become_method: root
+  apt: update_cache=yes
+
+- name: mysql | Install MySQL Packages
+  become: yes
+  become_method: root
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-mysqldb
+    - mysql-client
+    - mysql-common
+    - mysql-server
+
+- name: mysql | Update root password for all root accounts
+  mysql_user: name=root host={{ item }} check_implicit_admin=yes password={{ mysql.root_password }} login_user=root login_password={{ mysql.root_password }}
+  with_items:
+    - "{{ current_hostname.stdout | lower }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Check my.cnf
+  stat: path=/etc/mysql/mysql.conf.d/mysqld.cnf
+  register: mycnf_file
+
+- name: Add conf sql_mode
+  become: yes
+  become_method: root
+  lineinfile:
+    dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+    line="sql_mode=NO_ENGINE_SUBSTITUTION"
+    insertafter=EOF
+  when: mycnf_file.stat.exists == True
+
+- name: restart mysql
+  service: name=mysql state=restarted
+  when: mycnf_file.stat.exists == True
+
+- name: mysql | Create databases
+  mysql_db: name={{ mysql.database }} state=present login_user=root login_password={{ mysql.root_password }}
+
+- name: mysql | Import dump
+  mysql_db: name={{ mysql.database }} state=import login_user=root login_password={{ mysql.root_password }} target=/vagrant/{{ mysql.dump }}
+  when: mysql.dump
+
+- name: mysql | Ensure anonymous users are not in the database
+  mysql_user: name='' host={{ item }} state=absent login_user=root login_password={{ mysql.root_password }}
+  with_items:
+    - localhost
+    - "{{ current_hostname.stdout | lower }}"
+
+- name: mysql | Create users
+  mysql_user: name={{ mysql.user }} password={{ mysql.password }} priv=*.*:ALL state=present login_user=root login_password={{ mysql.root_password }}

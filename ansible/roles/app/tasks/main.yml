@@ -1,0 +1,75 @@
+---
+- name: Folder permission
+  file: path={{ configs.vm_path }} state=directory owner=www-data group=www-data mode=0775
+  become: yes
+  become_method: sudo
+
+- name: Storage permission
+  file: path={{ configs.vm_path }}/storage state=directory mode=0777
+  become: yes
+  become_method: sudo
+
+- name: Check Env
+  stat: path={{ configs.vm_path }}/.env
+  register: env_file
+
+# - name: Copy file Env
+#   become: yes
+#   become_method: root
+#   copy: src={{ configs.vm_path }}/.env.vagrant dest={{ configs.vm_path }}/.env owner=www-data group=www-data mode=0644
+#   when: env_file.stat.exists == False
+
+# Create a ENV file
+- name: Create a env file based in vagrant_config.yml
+  copy:
+    content: |
+      APP_ENV=local
+      APP_KEY=base64:AyEFIJqM8y+Ttj0Bsw31II8cnjIs+nQPmlUbK69Mh1k=
+      APP_DEBUG=true
+      APP_LOG_LEVEL=debug
+      APP_URL={{ configs.vm_url }}
+
+      DB_CONNECTION=mysql
+      DB_HOST=127.0.0.1
+      DB_PORT=3306
+      DB_DATABASE={{ mysql.database }}
+      DB_USERNAME={{ mysql.user }}
+      DB_PASSWORD={{ mysql.password }}
+
+      BROADCAST_DRIVER=log
+      CACHE_DRIVER=file
+      SESSION_DRIVER=file
+      QUEUE_DRIVER=sync
+
+      REDIS_HOST=127.0.0.1
+      REDIS_PASSWORD=null
+      REDIS_PORT=6379
+
+      MAIL_DRIVER=smtp
+      MAIL_HOST=mailtrap.io
+      MAIL_PORT=2525
+      MAIL_USERNAME=null
+      MAIL_PASSWORD=null
+      MAIL_ENCRYPTION=null
+
+      PUSHER_APP_ID=
+      PUSHER_KEY=
+      PUSHER_SECRET=
+    dest: "{{ configs.vm_path }}/.env"
+    owner: www-data
+    group: www-data
+    mode: 0644
+  when: env_file.stat.exists == False
+
+- name: Storage usage permission
+  file: path={{ configs.vm_path }}/bootstrap/cache/ state=directory mode=0777
+  become: yes
+  become_method: sudo
+
+- name: Install Composer on Project
+  composer: command=install working_dir={{ configs.vm_path }}
+
+- name: Install Migrations and seeds
+  shell: php artisan migrate --seed
+  args:
+   chdir: "{{ configs.vm_path }}"

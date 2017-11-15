@@ -1,0 +1,92 @@
+---
+configs: &configs
+  vm_box: &configs_vm_box
+    'ubuntu/xenial64'                        # image name; trusty=14.04; xenial=16.04; xenial=16.04; zesty=17.04;
+  vm_name: &configs_vm_name
+    'project.dev'                            # None special characters
+  vm_memory: &configs_vm_memory
+    1024                                     # RAM memory - recommend > 1024
+  vm_cpus: &configs_vm_cpus
+    1                                        # CPUs
+  vm_ip: &configs_vm_ip
+    '69.69.69.69'                            #ip VM
+  vm_url: &configs_vm_url
+    'project.dev'                            #url
+  vm_path: &configs_vm_path
+    '/var/www/project.dev'                   #default path
+  project_root: &configs_project_root
+    '/var/www/project.dev/public'            #default path site
+  prod_url: &configs_prod_url
+    'project.dev'                            #prod url for replace on database Search replace
+  prod_path: &configs_prod_path
+    ''                                       #prod url for replace on database Search replace
+
+php:
+  ppa: "ppa:ondrej/php"
+  name_version: "php7.1"
+  version: "7.1"
+  packages:
+    - common
+    - cli
+    - intl
+    - curl
+    - mysql
+    - readline
+    - mcrypt
+    - json
+    - mbstring
+    - xml
+    - zip
+    - gd
+    - fpm
+  timezone: Europe/Dublin
+  upload_max_filesize: "100M"
+  post_max_size: "100M"
+  memory_limit: "512M"
+  fpmsocket: "/run/php/php7.1-fpm.sock"
+
+apache2:
+  docroot: *configs_project_root
+  servername: *configs_vm_url
+
+nginx:
+  docroot: *configs_project_root
+  servername: *configs_vm_url
+
+mysql:
+  root_password: '123'
+  database: project_database
+  user: projectuser
+  password: '123'
+  dump: ''
+
+ohmyzsh:
+  theme: 'agnoster'
+
+nodejs:
+  version: '9' # Only this versions:  4 - older LTS; 6 - Precise; 8 - Latest LTS; 9 - Current;
+
+npm:
+  global_packages:
+    - npm
+    - gulp
+
+vagrant_local:
+  vm:
+    base_box: *configs_vm_box
+    hostname: *configs_vm_name
+    ip: *configs_vm_ip
+    memory: *configs_vm_memory
+    sharedfolder: ./
+    useVagrantCloud: '1'
+    syncType: '0'
+
+server:
+  packages:
+    - vim
+    - git
+    - htop
+    - unzip
+    - curl
+  timezone: America/Sao_Paulo
+  locale: pt_BR.UTF-8

@@ -1,0 +1,15 @@
+---
+- name: Add PPA for Nginx.
+  become: yes
+  become_method: root
+  apt_repository: repo='ppa:ondrej/nginx'
+
+- name: Update apt
+  become: yes
+  become_method: root
+  apt: update_cache=yes
+
+- name: Install Nginx
+  become: yes
+  become_method: root
+  apt: pkg=nginx state=latest

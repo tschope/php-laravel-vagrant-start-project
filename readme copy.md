@@ -1,25 +1,4 @@
-# PHP Laravel Vagrant Start Project
-This project it's your start for new projects using:
-
-- Vagrant
-- Ansible
-- PHP 7.1
-- MySQL 5.7
-- Laravel 5.5
-- NodeJS
-- VueJS 2
-
-## Why
-
-With this project I integrated most parts of roles with only one config file
-
-```
-vagrant_congig.yml
-```
-
-Most configs is there, changed and enjoy the project
-
-# PHP Laravel Test
+#PHP Laravel Vagrant Start Project
 
 Project develop for PHP with REST API.
 
@@ -31,8 +10,8 @@ I use Laravel 5.5 and VueJS 2.0 with Bootstrap Visual
 
 I create a Vagrant instance to envoirement the project. You need hostmanager plugin to use the project. After install:
 
-- [VirtaulBox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
+- [VirtaulBox](https://www.virtualbox.org/wiki/Downloads)
 
 Just:
 

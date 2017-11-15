@@ -1,0 +1,18 @@
+---
+# oh-my-zsh
+
+- name: oh-my-zsh | Install oh-my-zsh
+  apt: name={{ item }}  state=latest update_cache=yes
+  with_items:
+   - git
+   - zsh
+   - git-core
+
+- include: setup-Xenial.yml
+  when: ansible_distribution_release == 'xenial'
+
+- include: setup-Xenial.yml
+  when: ansible_distribution_release == 'zesty'
+
+- include: setup-Trusty.yml
+  when: ansible_distribution_release == 'trusty'
