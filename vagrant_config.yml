@@ -23,8 +23,8 @@ configs: &configs
 
 php:
   ppa: "ppa:ondrej/php"
-  name_version: "php7.1"
-  version: "7.1"
+  name_version: "php7.2"
+  version: "7.2"
   packages:
     - common
     - cli
@@ -32,7 +32,7 @@ php:
     - curl
     - mysql
     - readline
-    - mcrypt
+    #- mcrypt
     - json
     - mbstring
     - xml
@@ -43,7 +43,7 @@ php:
   upload_max_filesize: "100M"
   post_max_size: "100M"
   memory_limit: "512M"
-  fpmsocket: "/run/php/php7.1-fpm.sock"
+  fpmsocket: "/run/php/php7.2-fpm.sock"
 
 apache2:
   docroot: *configs_project_root
