@@ -12,5 +12,5 @@
     - composer
     - mysql5.7
     - oh-my-zsh
-    - nodejs
+    #- nodejs
     - app
