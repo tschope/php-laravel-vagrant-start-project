@@ -184,6 +184,8 @@ fastlane/test_output
 
 ### Vagrant template
 .vagrant/
+ubuntu-*.log
+
 ### CodeIgniter template
 */config/development
 */logs/log-*.php
