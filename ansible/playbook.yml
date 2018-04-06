@@ -7,10 +7,11 @@
   roles:
     - server
     - vagrant_local
+    - remove-apache2
     - nginx
     - php
     - composer
     - mysql5.7
     - oh-my-zsh
-    #- nodejs
+    - nodejs
     - app

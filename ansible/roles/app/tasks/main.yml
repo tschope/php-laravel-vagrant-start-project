@@ -1,11 +1,6 @@
 ---
 - name: Folder permission
-  file: path={{ configs.vm_path }} state=directory owner=www-data group=www-data mode=0775
-  become: yes
-  become_method: sudo
-
-- name: Storage permission
-  file: path={{ configs.vm_path }}/storage state=directory mode=0777
+  file: path={{ configs.vm_path }} state=directory mode=0777
   become: yes
   become_method: sudo
 
@@ -61,18 +56,34 @@
     mode: 0644
   when: env_file.stat.exists == False
 
-- name: Storage usage permission
-  file: path={{ configs.vm_path }}/bootstrap/cache/ state=directory mode=0777
-  become: yes
-  become_method: sudo
-
 - name: Install Composer on Project
   composer: command=install working_dir={{ configs.vm_path }}
+  become: yes
+  become_method: vagrant
 
 - name: Update Composer on Project
   composer: command=update working_dir={{ configs.vm_path }}
+  become: yes
+  become_method: vagrant
 
 - name: Install Migrations and seeds
   shell: php artisan migrate --seed
   args:
    chdir: "{{ configs.vm_path }}"
+  become: yes
+  become_method: vagrant
+
+- name: Folder permission
+  file: path={{ configs.vm_path }} state=directory owner=vagrant group=vagrant mode=0775
+  become: yes
+  become_method: sudo
+
+- name: Storage permission
+  file: path={{ configs.vm_path }}/storage state=directory mode=0777
+  become: yes
+  become_method: sudo
+
+- name: Storage usage permission
+  file: path={{ configs.vm_path }}/bootstrap/cache/ state=directory mode=0777
+  become: yes
+  become_method: sudo
