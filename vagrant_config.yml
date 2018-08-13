@@ -23,8 +23,8 @@ configs: &configs
 
 php:
   ppa: "ppa:ondrej/php"
-  name_version: "php7.2"
-  version: "7.2"
+  name_version: "php7.1"
+  version: "7.1"
   packages:
     - common
     - cli
@@ -32,7 +32,7 @@ php:
     - curl
     - mysql
     - readline
-    #- mcrypt
+    - mcrypt
     - json
     - mbstring
     - xml
@@ -43,7 +43,7 @@ php:
   upload_max_filesize: "100M"
   post_max_size: "100M"
   memory_limit: "512M"
-  fpmsocket: "/run/php/php7.2-fpm.sock"
+  fpmsocket: "/run/php/php7.1-fpm.sock"
 
 apache2:
   docroot: *configs_project_root
@@ -64,12 +64,8 @@ ohmyzsh:
   theme: 'agnoster'
 
 nodejs:
-  version: '9' # Only this versions:  4 - older LTS; 6 - Precise; 8 - Latest LTS; 9 - Current;
-
-npm:
-  global_packages:
-    - npm
-    - gulp
+  version: 9.11.2
+  npm: 5.6
 
 vagrant_local:
   vm:

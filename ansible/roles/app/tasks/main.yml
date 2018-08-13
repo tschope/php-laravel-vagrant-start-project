@@ -87,3 +87,17 @@
   file: path={{ configs.vm_path }}/bootstrap/cache/ state=directory mode=0777
   become: yes
   become_method: sudo
+
+- name: NPM Install gulp
+  shell: npm install -g gulp
+  args:
+   chdir: "{{ configs.vm_path }}"
+  become: yes
+  become_method: sudo
+
+- name: NPM Install
+  shell: npm install
+  args:
+   chdir: "{{ configs.vm_path }}"
+  become: yes
+  become_method: sudo

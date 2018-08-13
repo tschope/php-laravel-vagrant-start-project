@@ -1,6 +1,19 @@
 ---
-# Pin-Priority of NodeSource repository
-nodejs_nodesource_pin_priority: 500
 
-# 0.10 or 0.12 or 4.x
+# Node version to install
+#  Make sure that the distribution and version supports the nodejs version
+#  you intend to install
+#
 nodejs_version: "{{ nodejs.version }}"
+
+# NPM version
+#
+nodejs_npm_version: "{{ nodejs.npm }}"
+
+# Upgrade nodejs
+#  If you need to upgrade a currently installed nodejs version, then you
+#  should set this to True. This is mostly intended to be specified as an
+#  extra var for the playbook run.
+nodejs_upgrade: true
+
+# vi:ts=2:sw=2:et:ft=yaml
