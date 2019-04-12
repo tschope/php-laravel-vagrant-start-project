@@ -56,6 +56,13 @@
     mode: 0644
   when: env_file.stat.exists == False
 
+- name: Allow root composer
+  shell: export COMPOSER_ALLOW_SUPERUSER=1; composer show;
+  args:
+    chdir: "{{ configs.vm_path }}"
+  become: yes
+  become_method: root
+
 - name: Install Composer on Project
   composer: command=install working_dir={{ configs.vm_path }}
   become: yes
@@ -94,3 +101,4 @@
    chdir: "{{ configs.vm_path }}"
   become: yes
   become_method: root
+

@@ -3,29 +3,30 @@
 - shell: hostname
   register: current_hostname
 
-- name: MySQL 5.7 Key
+- name: Add official MySQL package authentication key
   apt_key:
-    keyserver: pgp.mit.edu
+    keyserver: pool.sks-keyservers.net
     id: 5072E1F5
-
-- name: Install Repo MySQL 5.7 mysql-apt-config
-  apt_repository:
-    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-apt-config
     state: present
 
-- name: Install Repo MySQL 5.7
+- name: Install Repo MySQL 8.0 mysql-apt-config
   apt_repository:
-    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
+    repo: deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-apt-config
     state: present
 
-- name: Install Repo MySQL 5.7 mysql-tools
+- name: Install Repo MySQL 8.0
   apt_repository:
-    repo: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools
+    repo: deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-8.0
     state: present
 
-- name: Install Repo MySQL 5.7 deb-src
+- name: Install Repo MySQL 8.0 mysql-tools
   apt_repository:
-    repo: deb-src http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
+    repo: deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-tools
+    state: present
+
+- name: Install Repo MySQL 8.0 deb-src
+  apt_repository:
+    repo: deb-src http://repo.mysql.com/apt/ubuntu/ bionic mysql-8.0
     state: present
 
 - name: Update apt

@@ -9,6 +9,7 @@
     - vagrant_local
     - nginx
     - php
+    - remove-apache2
     - composer
     - mysql5.7
     - oh-my-zsh

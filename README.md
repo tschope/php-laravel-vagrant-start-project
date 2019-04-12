@@ -5,9 +5,9 @@ This project it's your start for new projects using:
 - Ansible
 - PHP 7.1
 - MySQL 5.7
-- Laravel 5.5
+- Laravel 5.8
 - NodeJS
-- VueJS 2
+- VueJS 2.6
 
 ## Why
 
@@ -27,7 +27,7 @@ This project use Ubuntu and I created a few roles for Ansiable and this roles on
 
 Project develop for PHP with REST API.
 
-I use Laravel 5.5 and VueJS 2.0 with Bootstrap Visual
+I use Laravel 5.8 and VueJS 2.6 with Bootstrap
 
 ## Run Project
 

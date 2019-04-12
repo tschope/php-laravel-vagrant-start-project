@@ -4,8 +4,10 @@
 
 # - name: create a composer.json
 #   command: chdir={{ wp_cli_dir }} {{ composer }} init --stability dev --no-interaction
+
 # - name: create a composer.json
 #   command: chdir={{ wp_cli_dir }} {{ composer }} config bin-dir bin
+
 # - name: create a composer.json
 #   command: chdir={{ wp_cli_dir }} {{ composer }} config vendor-dir vendor
 
