@@ -3,7 +3,7 @@ This project it's your start for new projects using:
 
 - Vagrant
 - Ansible
-- PHP 7.1
+- PHP 7.3
 - MySQL 5.7
 - Laravel 5.8
 - NodeJS
